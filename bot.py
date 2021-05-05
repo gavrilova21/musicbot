@@ -3,7 +3,11 @@ import config
 import recogniser
 import yandex_parsing
 import messages
+import os
 from music_finder import get_song
+from flask import Flask, request
+
+server = Flask(__name__)
 
 # config.py - все токены
 
@@ -69,5 +73,20 @@ def listener(message):
         bot.send_message(message.chat.id, result_message)
 
 
+@server.route('/' + config.token, methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
+
+
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://test-new-new.herokuapp.com/' + config.token)
+    return "!", 200
+
+
 if __name__ == '__main__':
+    server.debug = True
+    server.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
     bot.polling(none_stop=True)
