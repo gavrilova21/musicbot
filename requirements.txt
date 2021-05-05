@@ -6,4 +6,3 @@ urllib3==1.26.4
 PyTelegramBotAPI==2.2.3
 acrcloud
 bs4
-flask
