@@ -82,7 +82,7 @@ def getMessage():
 @server.route("/")
 def webhook():
     bot.remove_webhook()
-    bot.set_webhook(url='https://test-new-new.herokuapp.com/' + config.token)
+    bot.set_webhook(url='https://quiet-bayou-54355.herokuapp.com/' + config.token)
     return "!", 200
 
 
