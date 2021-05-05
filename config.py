@@ -1,0 +1,5 @@
+token = '1729482394:AAGpRJZ1Mc2nB_QvfJdUGNCulheyDFBXAnc'
+audio_dir = 'track.ogg'
+acrcloud_key = '4aca6d089717c23585f43b957870c8c3'
+acrcloud_secret = '2WM52yeRg7TaizVhlk7RkdA0FVqgp4iVOupE1CM4'
+musixmatch_key = '49fcc06fa3756bce9870b7574af15b70'
