@@ -1,1 +1,1 @@
-web: pip uninstall telebot; pip install pytelegrambotapi; python bot.py
+worker: pip uninstall telebot; pip install pytelegrambotapi; python bot.py
