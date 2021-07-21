@@ -9,6 +9,7 @@ from music_finder import get_song
 
 bot = telebot.TeleBot(config.token)
 
+
 @bot.message_handler(commands=['start'])
 def start_handler(message):
     bot.reply_to(message, messages.HELLO)
