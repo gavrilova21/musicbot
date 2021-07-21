@@ -21,7 +21,7 @@ def help_handler(message):
 
 # декоратор, если приходит голосовое сообщение или аудио
 @bot.message_handler(content_types=["voice", "audio"])
-def listener(message):
+def sound_listener(message):
     try:
         file_id = message.voice.file_id
     except AttributeError:
@@ -54,7 +54,7 @@ def listener(message):
 
 
 @bot.message_handler(content_types=["text"])
-def listener(message):
+def text_recogniser(message):
     title, artist = get_song(message.text)
     if title == -1:
         bot.send_message(message.chat.id, "К сожалению, я не нашел такую песню (")
