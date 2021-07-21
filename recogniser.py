@@ -1,10 +1,10 @@
 from acrcloud.recognizer import ACRCloudRecognizer
-from config import acrcloud_key, acrcloud_secret
+from config import ACRCLOUD_KEY, ACRCLOUD_SECRET
 
 config = {
     'host': 'eu-west-1.api.acrcloud.com',
-    'access_key': acrcloud_key,
-    'access_secret': acrcloud_secret,
+    'access_key': ACRCLOUD_KEY,
+    'access_secret': ACRCLOUD_SECRET,
     'timeout': 10  # seconds
 }
 

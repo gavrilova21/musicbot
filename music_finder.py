@@ -1,15 +1,15 @@
-from config import musixmatch_key
+from config import MUSIXMATCH_KEY
 import requests
 
-base_url = "https://api.musixmatch.com/ws/1.1/track.search?"
-api_key = f"apikey={musixmatch_key}"
-parameters = '&page_size=1&page=1&s_track_rating=desc'
+BASE_URL = "https://api.musixmatch.com/ws/1.1/track.search?"
+API_KEY = f"apikey={MUSIXMATCH_KEY}"
+PARAMETERS = '&page_size=1&page=1&s_track_rating=desc'
 
 
 def get_song(lyrics):
     lyrics = lyrics.replace(" ", "%20")
     q_lyrics = f'&q_lyrics={lyrics}'
-    api_call = base_url + api_key + q_lyrics+parameters
+    api_call = BASE_URL + API_KEY + q_lyrics + PARAMETERS
     request = requests.get(api_call)
     data = request.json()
     tracks = data['message']['body']['track_list']

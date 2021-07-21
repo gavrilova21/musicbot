@@ -7,7 +7,7 @@ from music_finder import get_song
 
 # config.py - все токены
 
-bot = telebot.TeleBot(config.token)
+bot = telebot.TeleBot(config.TOKEN)
 
 
 @bot.message_handler(commands=['start'])
@@ -32,11 +32,11 @@ def sound_listener(message):
     file_path = file_info.file_path
     downloaded_audio = bot.download_file(file_path)
 
-    audio_file = config.audio_dir
+    audio_file = config.AUDIO_DIR
 
     with open(audio_file, "wb") as new_file:
         new_file.write(downloaded_audio)
-        response = recogniser.get_response(music_file_path=config.audio_dir,
+        response = recogniser.get_response(music_file_path=config.AUDIO_DIR,
                                            start_seconds=3)
 
         title, artist = recogniser.parse_response(response)
