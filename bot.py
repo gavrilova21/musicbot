@@ -41,8 +41,7 @@ def sound_listener(message):
         title, artist = recogniser.parse_response(response)
 
         if not (title and artist):
-            result_message = "К сожалению, я не нашел такую песню ("
-            bot.send_message(message.chat.id, result_message)
+            bot.send_message(message.chat.id, messages.NOT_FOUND_MESSAGE)
         else:
             yandex_music_link = yandex_parsing.get_ref(title, artist)
             if yandex_music_link == -1:  # если песня нашлась, но ее нет в Я.Музыке
@@ -57,7 +56,7 @@ def sound_listener(message):
 def text_recogniser(message):
     title, artist = get_song(message.text)
     if title == -1:
-        bot.send_message(message.chat.id, "К сожалению, я не нашел такую песню (")
+        bot.send_message(message.chat.id, messages.NOT_FOUND_MESSAGE)
     else:
         yandex_music_link = yandex_parsing.get_ref(title, artist)
         if yandex_music_link == -1:  # если песня нашлась, но ее нет в Я.Музыке
