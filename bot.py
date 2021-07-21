@@ -45,7 +45,7 @@ def sound_listener(message):
         else:
             yandex_music_link = yandex_parsing.get_ref(title, artist)
             if yandex_music_link == -1:  # если песня нашлась, но ее нет в Я.Музыке
-                result_message = f"Нашел 😄\nЭто же песня \"{title}\" исполнителя {artist}!\n"
+                result_message = messages.SUCCESS_FOUND.format(title, artist)
             else:
                 result_message = f"Нашел 😄\nЭто же песня \"{title}\" исполнителя {artist}!\n" + \
                                  f"Можешь послушать ее на Яндекс.Музыке {yandex_music_link} "
@@ -60,7 +60,7 @@ def text_recogniser(message):
     else:
         yandex_music_link = yandex_parsing.get_ref(title, artist)
         if yandex_music_link == -1:  # если песня нашлась, но ее нет в Я.Музыке
-            result_message = f"Нашел 😄\nЭто же песня \"{title}\" исполнителя {artist}!\n"
+            result_message = messages.SUCCESS_FOUND.format(title, artist)
         else:
             result_message = f"Нашел 😄\nЭто же песня \"{title}\" исполнителя {artist}!\n" + \
                              f"Можешь послушать ее на Яндекс.Музыке {yandex_music_link} "
