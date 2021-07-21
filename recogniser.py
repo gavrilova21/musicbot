@@ -33,7 +33,8 @@ def parse_response(response):
                 found = False
                 break
 
-    title, artist = None, None
+    title = None
+    artist = None
 
     if found:
         for i, response_element in enumerate(responses):
