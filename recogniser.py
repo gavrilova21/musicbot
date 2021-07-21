@@ -55,4 +55,4 @@ def parse_response(response):
                     )
                 )
 
-    return title, artist
+    return list(title, artist)
