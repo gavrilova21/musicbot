@@ -26,7 +26,7 @@ def get_response(music_file_path, start_seconds=3):
     return response
 
 
-def parsed_responses(response):
+def get_parsed_responses(response):
     responses = []
     for response_element in response.split(':'):
         responses += response_element.split(',')
@@ -63,7 +63,7 @@ def get_track_info(responses):
 
 
 def parse_response(response):
-    responses = parsed_responses(response)
+    responses = get_parsed_responses(response)
 
     if success_recognise_track(responses):
         return get_track_info(responses)
