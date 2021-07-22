@@ -9,6 +9,10 @@ config = {
 }
 
 
+def cleaned(name):
+    return ''.join(list(filter(lambda ch: ch not in "?.!/;:\\\"'{[]}", title)))
+
+
 def get_response(music_file_path, start_seconds=3):
     recognizer = ACRCloudRecognizer(config)
     response = recognizer.recognize_by_file(file_path=music_file_path, start_seconds=start_seconds)
@@ -39,20 +43,9 @@ def parse_response(response):
     if found:
         for i, response_element in enumerate(responses):
             if 'title' in response_element:
-                title = responses[i + 1]
-                title = ''.join(
-                    list(
-                        filter(
-                            lambda ch: ch not in "?.!/;:\\\"'{[]}", title)
-                    )
-                )
+                title = cleaned(responses[i + 1])
+
             if 'artists' in response_element and 'name' in responses[i + 1]:
-                artist = responses[i + 2]
-                artist = ''.join(
-                    list(
-                        filter(
-                            lambda ch: ch not in "?.!/;:\\\"'{[]}", artist)
-                    )
-                )
+                artist = cleaned(responses[i + 2])
 
     return list(title, artist)
