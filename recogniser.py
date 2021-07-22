@@ -21,7 +21,7 @@ def get_response(music_file_path, start_seconds=3):
 
 def parsed_responses(response):
     responses = []
-    for i, response_element in enumerate(response.split(':')):
+    for response_element in response.split(':'):
         responses += response_element.split(',')
     return responses
 
