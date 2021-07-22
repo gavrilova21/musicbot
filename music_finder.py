@@ -1,5 +1,7 @@
 from config import MUSIXMATCH_KEY
 import requests
+from errors import NotFoundMusicxException
+from recogniser import Track
 
 BASE_URL = "https://api.musixmatch.com/ws/1.1/track.search?"
 API_KEY = f"apikey={MUSIXMATCH_KEY}"
@@ -14,8 +16,7 @@ def get_song(lyrics):
     data = request.json()
     tracks = data['message']['body']['track_list']
     if not(len(tracks)):
-        return -1, -1
+        raise NotFoundMusicxException
+
     track = tracks[0]['track']
-    title = track['track_name']
-    artist = track['artist_name']
-    return title, artist
+    return Track(track['track_name'], track['artist_name'])
