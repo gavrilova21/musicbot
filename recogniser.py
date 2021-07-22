@@ -16,7 +16,7 @@ class Track:
     artist: str
 
 
-def cleaned(name):
+def cleaned_response(name):
     return ''.join(list(filter(lambda ch: ch not in "?.!/;:\\\"'{[]}", name)))
 
 
@@ -54,10 +54,10 @@ def get_track_info(responses):
 
     for i, response_element in enumerate(responses):
         if 'title' in response_element:
-            title = cleaned(responses[i + 1])
+            title = cleaned_response(responses[i + 1])
 
         if 'artists' in response_element and 'name' in responses[i + 1]:
-            artist = cleaned(responses[i + 2])
+            artist = cleaned_response(responses[i + 2])
 
     return Track(title, artist)
 
