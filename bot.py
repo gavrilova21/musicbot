@@ -5,6 +5,7 @@ import yandex_parsing
 import messages
 from music_finder import get_song
 from errors import NotFoundYandexMusicException, NotFoundMusicxException
+from recogniser import Track
 
 # config.py - все токены
 
@@ -40,7 +41,9 @@ def sound_listener(message):
         response = recogniser.get_response(music_file_path=config.AUDIO_DIR,
                                            start_seconds=3)
 
-        title, artist = recogniser.parse_response(response)
+        track = recogniser.parse_response(response)
+        title = track.title
+        artist = track.artist
 
         if not (title and artist):
             bot.send_message(message.chat.id, messages.NOT_FOUND_MESSAGE)
@@ -56,10 +59,12 @@ def sound_listener(message):
 @bot.message_handler(content_types=["text"])
 def text_recogniser(message):
     try:
-        title, artist = get_song(message.text)
+        track = get_song(message.text)
     except NotFoundMusicxException:
         bot.send_message(message.chat.id, messages.NOT_FOUND_MESSAGE)
     else:
+        title = track.title
+        artist = track.artist
         try:
             yandex_music_link = yandex_parsing.get_ref(title, artist)
         except NotFoundYandexMusicException:

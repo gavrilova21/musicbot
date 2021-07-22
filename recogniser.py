@@ -1,5 +1,6 @@
 from acrcloud.recognizer import ACRCloudRecognizer
 from config import ACRCLOUD_KEY, ACRCLOUD_SECRET
+from dataclasses import dataclass
 
 config = {
     'host': 'eu-west-1.api.acrcloud.com',
@@ -7,6 +8,12 @@ config = {
     'access_secret': ACRCLOUD_SECRET,
     'timeout': 10  # seconds
 }
+
+
+@dataclass
+class Track:
+    title: str
+    artist: str
 
 
 def cleaned(name):
@@ -52,7 +59,7 @@ def get_track_info(responses):
         if 'artists' in response_element and 'name' in responses[i + 1]:
             artist = cleaned(responses[i + 2])
 
-    return list(title, artist)
+    return Track(title, artist)
 
 
 def parse_response(response):
@@ -61,4 +68,4 @@ def parse_response(response):
     if success_recognise_track(responses):
         return get_track_info(responses)
 
-    return None, None
+    return Track(None, None)
