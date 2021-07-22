@@ -4,6 +4,7 @@ import recogniser
 import yandex_parsing
 import messages
 from music_finder import get_song
+from errors import NotFoundYandexMusicException
 
 # config.py - все токены
 
@@ -58,8 +59,9 @@ def text_recogniser(message):
     if title == -1:
         bot.send_message(message.chat.id, messages.NOT_FOUND_MESSAGE)
     else:
-        yandex_music_link = yandex_parsing.get_ref(title, artist)
-        if yandex_music_link == -1:  # если песня нашлась, но ее нет в Я.Музыке
+        try:
+            yandex_music_link = yandex_parsing.get_ref(title, artist)
+        except NotFoundYandexMusicException:
             result_message = messages.SUCCESS_FOUND.format(title, artist)
         else:
             result_message = messages.SUCCESS_FOUND_WITH_LINK.format(title, artist, yandex_music_link)
