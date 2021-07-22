@@ -19,12 +19,14 @@ def get_response(music_file_path, start_seconds=3):
     return response
 
 
-def parse_response(response):
-    response_splitted = response.split(':')
+def parsed_responses(response):
     responses = []
-    for i, response_element in enumerate(response_splitted):
+    for i, response_element in enumerate(response.split(':')):
         responses += response_element.split(',')
+    return responses
 
+
+def success_recognise_track(responses):
     found = True
 
     for i, response_element in enumerate(responses):
@@ -36,16 +38,27 @@ def parse_response(response):
                 print("Not found")
                 found = False
                 break
+    return found
 
+
+def get_track_info(responses):
     title = None
     artist = None
 
-    if found:
-        for i, response_element in enumerate(responses):
-            if 'title' in response_element:
-                title = cleaned(responses[i + 1])
+    for i, response_element in enumerate(responses):
+        if 'title' in response_element:
+            title = cleaned(responses[i + 1])
 
-            if 'artists' in response_element and 'name' in responses[i + 1]:
-                artist = cleaned(responses[i + 2])
+        if 'artists' in response_element and 'name' in responses[i + 1]:
+            artist = cleaned(responses[i + 2])
 
     return list(title, artist)
+
+
+def parse_response(response):
+    responses = parsed_responses(response)
+
+    if success_recognise_track(responses):
+        return get_track_info(responses)
+
+    return None, None
