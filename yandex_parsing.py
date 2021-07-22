@@ -28,7 +28,7 @@ def get_ref(title, artist):
     parser = ParserYandexMusic(title=title, artist=artist)
     array_of_songs = parser.parse()
     if len(array_of_songs) == 0:
-        raise NotFoundYandexMusicException
+        raise NotFoundYandexMusicException(title, artist)
     else:
         song = array_of_songs[0]
         song = str(song)
