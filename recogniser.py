@@ -10,7 +10,7 @@ config = {
 
 
 def cleaned(name):
-    return ''.join(list(filter(lambda ch: ch not in "?.!/;:\\\"'{[]}", title)))
+    return ''.join(list(filter(lambda ch: ch not in "?.!/;:\\\"'{[]}", name)))
 
 
 def get_response(music_file_path, start_seconds=3):
