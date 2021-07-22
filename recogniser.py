@@ -1,5 +1,6 @@
 from acrcloud.recognizer import ACRCloudRecognizer
 from config import ACRCLOUD_KEY, ACRCLOUD_SECRET
+from dataclasses import dataclass
 
 config = {
     'host': 'eu-west-1.api.acrcloud.com',
@@ -9,18 +10,30 @@ config = {
 }
 
 
+@dataclass
+class Track:
+    title: str
+    artist: str
+
+
+def cleaned_response(name):
+    return ''.join(list(filter(lambda ch: ch not in "?.!/;:\\\"'{[]}", name)))
+
+
 def get_response(music_file_path, start_seconds=3):
     recognizer = ACRCloudRecognizer(config)
     response = recognizer.recognize_by_file(file_path=music_file_path, start_seconds=start_seconds)
     return response
 
 
-def parse_response(response):
-    response_splitted = response.split(':')
+def get_parsed_responses(response):
     responses = []
-    for i, response_element in enumerate(response_splitted):
+    for response_element in response.split(':'):
         responses += response_element.split(',')
+    return responses
 
+
+def success_recognise_track(responses):
     found = True
 
     for i, response_element in enumerate(responses):
@@ -32,26 +45,27 @@ def parse_response(response):
                 print("Not found")
                 found = False
                 break
+    return found
 
-    title, artist = None, None
 
-    if found:
-        for i, response_element in enumerate(responses):
-            if 'title' in response_element:
-                title = responses[i + 1]
-                title = ''.join(
-                    list(
-                        filter(
-                            lambda ch: ch not in "?.!/;:\\\"'{[]}", title)
-                    )
-                )
-            if 'artists' in response_element and 'name' in responses[i + 1]:
-                artist = responses[i + 2]
-                artist = ''.join(
-                    list(
-                        filter(
-                            lambda ch: ch not in "?.!/;:\\\"'{[]}", artist)
-                    )
-                )
+def get_track_info(responses):
+    title = None
+    artist = None
 
-    return title, artist
+    for i, response_element in enumerate(responses):
+        if 'title' in response_element:
+            title = cleaned_response(responses[i + 1])
+
+        if 'artists' in response_element and 'name' in responses[i + 1]:
+            artist = cleaned_response(responses[i + 2])
+
+    return Track(title, artist)
+
+
+def parse_response(response):
+    responses = get_parsed_responses(response)
+
+    if success_recognise_track(responses):
+        return get_track_info(responses)
+
+    return Track(None, None)
